@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'add_contract_page.dart';
-import 'edit_contract_page.dart';
-
 class ContractsPage extends StatefulWidget {
   final Function(Map<String, dynamic>) onEdit;
   final Function() onAdd;
 
   ContractsPage({required this.onEdit, required this.onAdd});
+
   @override
   _ContractsPageState createState() => _ContractsPageState();
 }
@@ -52,34 +50,34 @@ class _ContractsPageState extends State<ContractsPage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: contracts.length,
-        itemBuilder: (context, index) {
-          final contract = contracts[index];
-          final owner = contract['Eigentümer'];
-          final roof = contract['Dachflächen'];
-          return ListTile(
-            title: Text('VertragsID: ${contract['VertragsID']}'),
-            subtitle: Text(
-                'Eigentümer: ${owner['Name']}, DachID: ${roof['DachID']}'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () async {
-                    await widget.onEdit(contract);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    deleteContract(contract['VertragsID']);
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      );
+      itemCount: contracts.length,
+      itemBuilder: (context, index) {
+        final contract = contracts[index];
+        final owner = contract['Eigentümer'];
+        final roof = contract['Dachflächen'];
+        return ListTile(
+          title: Text('VertragsID: ${contract['VertragsID']}'),
+          subtitle: Text(
+              'Eigentümer: ${owner['Name']}, DachID: ${roof['DachID']}, Mietpreis/Q: ${contract['Mietpreis_Pro_Quartal']} CHF'),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () async {
+                  await widget.onEdit(contract);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  deleteContract(contract['VertragsID']);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

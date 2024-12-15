@@ -26,17 +26,15 @@ class _SettingsViewState extends State<SettingsView> {
     });
 
     try {
-      // Aufruf der RPC-Funktion zum Zurücksetzen der Datenbank
       await supabase.rpc('reset_database');
 
-      // Erfolgreiche Rückmeldung
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Datenbank erfolgreich zurückgesetzt')),
       );
     } catch (error) {
-      // Fehleranzeige mit SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Fehler beim Zurücksetzen der Datenbank: $error')),
+        SnackBar(
+            content: Text('Fehler beim Zurücksetzen der Datenbank: $error')),
       );
     } finally {
       setState(() {
@@ -44,7 +42,6 @@ class _SettingsViewState extends State<SettingsView> {
       });
     }
   }
-
 
   @override
   void initState() {

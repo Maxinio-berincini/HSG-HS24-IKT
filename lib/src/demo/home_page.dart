@@ -6,6 +6,7 @@ import 'package:solardach_demo/src/demo/roof/add_roof_page.dart';
 import 'package:solardach_demo/src/demo/roof/edit_roof_page.dart';
 import 'package:solardach_demo/src/demo/roof/roof_page.dart';
 import 'package:solardach_demo/src/settings/settings_view.dart';
+
 import 'analysis/analysis_page.dart';
 import 'app_drawer.dart';
 import 'contract/add_contract_page.dart';
@@ -15,23 +16,16 @@ import 'owner/add_owner_page.dart';
 import 'owner/edit_owner_page.dart';
 import 'owner/owners_page.dart';
 
-
 class HomePage extends StatefulWidget {
   final dynamic controller;
 
   const HomePage({super.key, required this.controller});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-enum MenuOption {
-  Statistics,
-  Roofs,
-  Owners,
-  Contracts,
-  PVSystems,
-  Settings
-}
+enum MenuOption { Statistics, Roofs, Owners, Contracts, PVSystems, Settings }
 
 class _HomePageState extends State<HomePage> {
   MenuOption _selectedOption = MenuOption.Statistics;

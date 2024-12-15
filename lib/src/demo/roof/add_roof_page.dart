@@ -1,5 +1,3 @@
-// lib/add_roof_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -77,74 +75,74 @@ class _AddRoofPageState extends State<AddRoofPage> {
         child: owners.isEmpty
             ? Center(child: CircularProgressIndicator())
             : Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: groesseController,
-                decoration: InputDecoration(labelText: 'Grösse (m²)'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Bitte Grösse eingeben';
-                  }
-                  return null;
-                },
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    TextFormField(
+                      controller: groesseController,
+                      decoration: InputDecoration(labelText: 'Grösse (m²)'),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Bitte Grösse eingeben';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: neigungController,
+                      decoration: InputDecoration(labelText: 'Neigung (°)'),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Bitte Neigung eingeben';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: ausrichtungController,
+                      decoration: InputDecoration(labelText: 'Ausrichtung'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Bitte Ausrichtung eingeben';
+                        }
+                        return null;
+                      },
+                    ),
+                    DropdownButtonFormField<int>(
+                      decoration: InputDecoration(labelText: 'Eigentümer'),
+                      value: selectedOwnerId,
+                      items: owners.map<DropdownMenuItem<int>>((owner) {
+                        return DropdownMenuItem<int>(
+                          value: owner['EigentümerID'],
+                          child: Text(owner['Name']),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedOwnerId = value;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Bitte einen Eigentümer auswählen';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          addRoof();
+                        }
+                      },
+                      child: Text('Speichern'),
+                    ),
+                  ],
+                ),
               ),
-              TextFormField(
-                controller: neigungController,
-                decoration: InputDecoration(labelText: 'Neigung (°)'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Bitte Neigung eingeben';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: ausrichtungController,
-                decoration: InputDecoration(labelText: 'Ausrichtung'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Bitte Ausrichtung eingeben';
-                  }
-                  return null;
-                },
-              ),
-              DropdownButtonFormField<int>(
-                decoration: InputDecoration(labelText: 'Eigentümer'),
-                value: selectedOwnerId,
-                items: owners.map<DropdownMenuItem<int>>((owner) {
-                  return DropdownMenuItem<int>(
-                    value: owner['EigentümerID'],
-                    child: Text(owner['Name']),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedOwnerId = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Bitte einen Eigentümer auswählen';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    addRoof();
-                  }
-                },
-                child: Text('Speichern'),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

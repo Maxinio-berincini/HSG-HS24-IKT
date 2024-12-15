@@ -23,8 +23,15 @@ class _AddOwnerPageState extends State<AddOwnerPage> {
         'Adresse': adresse,
       });
       Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Eigentümer erfolgreich hinzugefügt')),
+      );
     } catch (error) {
       print('Fehler beim Hinzufügen des Eigentümers: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Fehler beim Hinzufügen des Eigentümers: $error')),
+      );
     }
   }
 

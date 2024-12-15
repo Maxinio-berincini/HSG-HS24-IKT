@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'add_pv_systems.dart';
-import 'edit_pv_systems_page.dart';
-
 class PVSystemsPage extends StatefulWidget {
   final Function(Map<String, dynamic>) onEdit;
   final Function() onAdd;
 
   PVSystemsPage({required this.onEdit, required this.onAdd});
+
   @override
   _PVSystemsPageState createState() => _PVSystemsPageState();
 }
@@ -26,9 +24,8 @@ class _PVSystemsPageState extends State<PVSystemsPage> {
 
   void fetchPVSystems() async {
     try {
-      final data = await supabase
-          .from('PV-Anlagen')
-          .select('*, Dachflächen(*)');
+      final data =
+          await supabase.from('PV-Anlagen').select('*, Dachflächen(*)');
       setState(() {
         pvSystems = data;
       });
@@ -52,33 +49,33 @@ class _PVSystemsPageState extends State<PVSystemsPage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: pvSystems.length,
-        itemBuilder: (context, index) {
-          final pvSystem = pvSystems[index];
-          final roof = pvSystem['Dachflächen'];
-          return ListTile(
-            title: Text('AnlagenID: ${pvSystem['AnlagenID']}'),
-            subtitle: Text(
-                'DachID: ${roof['DachID']}, Kapazität: ${pvSystem['Kapazität']} kW'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () async {
-                    await widget.onEdit(pvSystem);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    deletePVSystem(pvSystem['AnlagenID']);
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      );
+      itemCount: pvSystems.length,
+      itemBuilder: (context, index) {
+        final pvSystem = pvSystems[index];
+        final roof = pvSystem['Dachflächen'];
+        return ListTile(
+          title: Text('AnlagenID: ${pvSystem['AnlagenID']}'),
+          subtitle: Text(
+              'DachID: ${roof['DachID']}, Kapazität: ${pvSystem['Kapazität']} kW, Einspeisevergütung: ${pvSystem['Einspeisevergütung']} CHF/kWh'),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () async {
+                  await widget.onEdit(pvSystem);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  deletePVSystem(pvSystem['AnlagenID']);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

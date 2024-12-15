@@ -22,13 +22,10 @@ class _EditOwnerPageState extends State<EditOwnerPage> {
     final adresse = adresseController.text;
 
     try {
-      await supabase
-          .from('Eigentümer')
-          .update({
+      await supabase.from('Eigentümer').update({
         'Name': name,
         'Adresse': adresse,
-      })
-          .eq('EigentümerID', widget.owner['EigentümerID']);
+      }).eq('EigentümerID', widget.owner['EigentümerID']);
       Navigator.pop(context);
     } catch (error) {
       print('Fehler beim Aktualisieren des Eigentümers: $error');
@@ -39,7 +36,8 @@ class _EditOwnerPageState extends State<EditOwnerPage> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.owner['Name']);
-    adresseController = TextEditingController(text: widget.owner['Adresse'] ?? '');
+    adresseController =
+        TextEditingController(text: widget.owner['Adresse'] ?? '');
   }
 
   @override

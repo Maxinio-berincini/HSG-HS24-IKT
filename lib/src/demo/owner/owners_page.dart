@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'add_owner_page.dart';
-import 'edit_owner_page.dart';
-
 class OwnersPage extends StatefulWidget {
   final Function(Map<String, dynamic>) onEdit;
   final Function() onAdd;
 
   OwnersPage({required this.onEdit, required this.onAdd});
+
   @override
   _OwnersPageState createState() => _OwnersPageState();
 }
@@ -50,31 +48,31 @@ class _OwnersPageState extends State<OwnersPage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: owners.length,
-        itemBuilder: (context, index) {
-          final owner = owners[index];
-          return ListTile(
-            title: Text(owner['Name']),
-            subtitle: Text(owner['Adresse'] ?? ''),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () async {
-                    await widget.onEdit(owner);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    deleteOwner(owner['EigentümerID']);
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      );
+      itemCount: owners.length,
+      itemBuilder: (context, index) {
+        final owner = owners[index];
+        return ListTile(
+          title: Text(owner['Name']),
+          subtitle: Text(owner['Adresse'] ?? ''),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () async {
+                  await widget.onEdit(owner);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  deleteOwner(owner['EigentümerID']);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
